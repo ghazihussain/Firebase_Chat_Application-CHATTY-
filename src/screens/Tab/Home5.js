@@ -11,8 +11,8 @@ import theme from '../../utils/theme';
 import LinearGradient from 'react-native-linear-gradient'
 
 var dataArray=[]
-
-
+// asdaas
+// saa
 export default class Home5 extends Component {
 
     constructor(props){
