@@ -12,7 +12,10 @@ import LinearGradient from 'react-native-linear-gradient'
 
 var dataArray=[]
 // asdaas
-// saa
+// dsaa
+
+
+// asada
 export default class Home5 extends Component {
 
     constructor(props){
