@@ -23,7 +23,9 @@ search:null
 componentDidMount(){
 
 var usid = firebase.auth().currentUser.uid;
-var ref = firebase.database().ref(`users/`+ usid + "/");
+
+const ref = firebase.database().ref(`users/${usid}/Status`);
+ref.onDisconnect().set({ Status: false });
 
 this.takedata();
 }
