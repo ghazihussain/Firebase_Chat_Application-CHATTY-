@@ -704,7 +704,7 @@ export default class Chat extends Component {
                 >
                      <View style={{ height: 40, backgroundColor: 'white', flexDirection: 'row', alignItems: 'center' ,marginTop:15 }}>
                         <View style={{ marginLeft: 10 }}>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Home4')} >
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Home1')} >
                                 <Icon name="ios-arrow-back"
                                     style={{
                                         fontSize: 30,
