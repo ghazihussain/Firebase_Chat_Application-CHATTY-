@@ -218,6 +218,7 @@ const dateData3 = [
   const [imageUri, setImageUri] = useState('');
   const [imageData, setImageData] = useState();
   const [visible, setvisible] = useState(false);
+  const [City, setCity] = useState('');
 
   const [year, setYear] = useState('');
   const [month, setMonth] = useState('');
@@ -445,7 +446,8 @@ const dateData3 = [
          Reciever:user_id,
          email:firebase.auth().currentUser.email,
          imageUrl:imageData,
-         skill:Skill
+         skill:Skill,
+         city:City
          
      }).then(()=>{
          navigation.navigate("LoginScreen")
@@ -594,6 +596,28 @@ console.log("bidthday is",birthdayDate)
                 onChangeText={x => setSkills(x)}
               />
             </Item>
+            <View style={{marginLeft: 30, alignSelf: 'flex-start', zIndex: 1}}>
+              <Text
+                style={{
+                  top: 15,
+                  backgroundColor: 'white',
+                  paddingLeft: 4,
+                  color: theme.colors.blue,
+                }}>
+                City{' '}
+              </Text>
+            </View>
+            <Item style={styles.inputStyle} rounded>
+              <Input
+                placeholderTextColor="grey"
+                placeholder="Only One Top Skill"
+                autoCapitalize="none"
+                autoCorrect={false}
+                value={City}
+                onChangeText={x => setCity(x)}
+              />
+            </Item>
+            
 
             {/* <View style={{ marginLeft: 30, alignSelf: 'flex-start', zIndex: 1, }}>
                             <Text
