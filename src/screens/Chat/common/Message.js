@@ -161,7 +161,7 @@ export default class MessageBox extends Component {
                 return (
                     <View >
                         <Text style={styles.timeViewEnd}> {this.props.item.time}</Text>
-                        <LinearGradient colors={[theme.colors.blue, '#01168A']} style={styles.msgViewSender}>
+                        <LinearGradient colors={[theme.colors.blue, '#1C84FF']} style={styles.msgViewSender}>
                             <Text style={{ color: 'white', fontSize: 16 }} >{this.props.item.text}</Text>
                             {this.renderSeen(this.props.item)}
                         </LinearGradient>
