@@ -396,43 +396,30 @@ export default class ChatInbox extends Component {
 
             return (
 
-                <SafeAreaView style={{ flex: 1,backgroundColor:theme.colors.blue }}>
+                <SafeAreaView style={{ flex: 1,backgroundColor:"white" }}>
                    
-                    <StatusBar backgroundColor={theme.colors.blue} barStyle="light-content" hidden={false} networkActivityIndicatorVisible={true} />
+                    <StatusBar backgroundColor={"theme.colors.blue"} barStyle="light-content" hidden={false} networkActivityIndicatorVisible={true} />
                     
 
                     <View style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
-                        <View style={styles.container}>
+                    <Item style={styles.inputStyle}>
+            <Icon name={'ios-search'} type='Ionicons' style={{ color: '#6A9993', marginHorizontal: 10 }} />
+            <Input
+              style={{ fontSize: 16 }}
+              placeholderTextColor='#6A9993'
+              placeholder="Search"
+              autoCapitalize="none"
+              autoCorrect={false}
+              // ref={ref => (this.erEmail = ref)}
+              // value={this.state.Search}
+              // onEndEditing={
+              //     this.props.searchFellows(this.state.SearchTerm)
+              // }
 
-                            <View 
-                            style={{position:'absolute',marginLeft:"5%",
-                           
-                            }}
-                            >
-                                    <TouchableOpacity onPress={()=>this.props.navigation.navigate('Home1')}>
-                                
-                                        <Icon type={"Ionicons"} name="ios-arrow-back"
-                                            style={{ color: 'white', fontSize: 25,}} />
-                                
-                                    </TouchableOpacity>
-                                </View>
-                            <Item rounded style={styles.inputStyle}>
-
-                                <Input
-                                    style={{ 
-                                        fontSize: 16, paddingLeft: 20, borderBottomWidth: 0, color: '#FFF'
-                                     }}
-                                    placeholderTextColor='white'
-                                    placeholder="Search..."
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                    value={this.state.List}
-                                    onChangeText={(value) => this.updateSearch(value)}
-                                >
-                                </Input>
-                                <Icon name={'ios-search'} type='Ionicons' style={{ color: 'white', marginHorizontal: 10 }} />
-                            </Item>
-                        </View>
+              value={this.state.List}
+              onChangeText={(value) => this.updateSearch(value)}
+            ></Input>
+          </Item>
                         <View>
                             <Text style={{ marginTop: 10, marginLeft: 8, fontSize: 25, fontWeight: '500' }}>Messages</Text>
                            
@@ -490,21 +477,19 @@ export default class ChatInbox extends Component {
 }
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: theme.colors.blue,
+        backgroundColor: "white",
         height: 80,
         justifyContent: 'center'
     },
     inputStyle: {
         alignSelf: "center",
-        width: '70%',
-        backgroundColor: '#891989',
-        height: 35,
-        justifyContent: 'center',
-        color: 'white',
-        borderColor: "#FFF",
-         backgroundColor:theme.colors.blue
-
-    },
+        width: '95%',
+        borderRadius: 5,
+        alignSelf: "center",
+        backgroundColor: '#E7EFEE',
+        marginVertical: 5,
+        marginTop: 10
+      },
     cardStyle:{
 
         backgroundColor: '#FFF',
