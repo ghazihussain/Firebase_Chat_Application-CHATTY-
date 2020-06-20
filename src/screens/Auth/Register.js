@@ -197,7 +197,7 @@ const Register = ({ navigation }) => {
 
           <TouchableOpacity onPress={()=>onPressButton()} style={styles.button}>
             <LinearGradient
-            colors={[theme.colors.blue,"#01168a"]}
+            colors={[theme.colors.blue,theme.colors.blue]}
             style={styles.signIn}
             
             >
@@ -208,12 +208,12 @@ const Register = ({ navigation }) => {
             <TouchableOpacity
             onPress={()=>navigation.goBack()}
             style={[styles.signIn,{
-              borderColor:'#009387',
+              borderColor:theme.colors.blue,
               borderWidth:1,
               marginTop:15
             }]}
             >
-              <Text style={[styles.textSign,{color:'#009387'}]}> Sign In</Text>
+              <Text style={[styles.textSign,{color:theme.colors.blue}]}> Sign In</Text>
             </TouchableOpacity>
 
            </TouchableOpacity>
