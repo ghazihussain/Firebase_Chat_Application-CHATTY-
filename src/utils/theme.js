@@ -1,13 +1,15 @@
 const images = {
-    //  mainLogo: require("../assets/logo.png"),
+      mainLogo: require("../assets/mainLogo.png"),
     menuIcon: require('../assets/menuIcon.png'),
 }
 const colors={
-    purple:'#800080',
+    purple:'#20a8e0',
     lightPurple:'#A040A0',
     white:"#FFF",
     blackBerry:"#df",
-    blue:"#1C84FF",
+    blue:"#20a8e0",
+    
+    
     grey:"#858585"
 }
 
