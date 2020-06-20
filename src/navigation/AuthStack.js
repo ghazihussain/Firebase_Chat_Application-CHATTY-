@@ -13,13 +13,13 @@ import Register3 from '../screens/Auth/Register3'
 import UserProfile from '../screens/Auth/UserProfile'
 
 const AuthStack = createStackNavigator({
-    // Splash: {
-    //     screen: SplashScreen,
-    //     navigationOptions: {
-    //       header: null
+    Splash: {
+        screen: SplashScreen,
+        navigationOptions: {
+          header: null
   
-    //     }
-    //   },
+        }
+      },
     LoginScreen:{
         screen:Login,
         navigationOptions:{
@@ -93,28 +93,28 @@ const AuthStack = createStackNavigator({
             
         })
     },
-    UserProfile:{
-        screen:UserProfile,
+    // UserProfile:{
+    //     screen:UserProfile,
 
-        navigationOptions:({ navigation })=>({
-             header: null,
-            title:'Name',
-            headerLeft: (
-                <TouchableHighlight
-                    onPress={() => navigation.goBack()
-                }
-                    underlayColor={'#444444'}
-                    >
+    //     navigationOptions:({ navigation })=>({
+    //          header: null,
+    //         title:'Name',
+    //         headerLeft: (
+    //             <TouchableHighlight
+    //                 onPress={() => navigation.goBack()
+    //             }
+    //                 underlayColor={'#444444'}
+    //                 >
                       
     
-                         <Icon type={"Ionicons"} name="md-arrow-back"
-                          style={{color:'black',marginLeft:20,fontSize:25}}/>
+    //                      <Icon type={"Ionicons"} name="md-arrow-back"
+    //                       style={{color:'black',marginLeft:20,fontSize:25}}/>
                         
-                </TouchableHighlight>
-            ),
+    //             </TouchableHighlight>
+    //         ),
             
-        })
-    },
+    //     })
+    // },
 },
 {
     defaultNavigationOptions: ({ navigation }) =>({
