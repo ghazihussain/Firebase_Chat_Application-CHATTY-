@@ -1,6 +1,6 @@
 
 import React,{useState} from 'react';
-import {View,Text, Button,StyleSheet,TouchableOpacity,Dimensions,TextInput,Platform, StatusBar} from 'react-native';
+import {View,Text, Button,StyleSheet,AsyncStorage,TouchableOpacity,Dimensions,TextInput,Platform, StatusBar} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -29,8 +29,13 @@ const SigninScreen = ({ navigation }) => {
   
   const onPressButton=()=>{
     firebase.auth()
-   .signInWithEmailAndPassword("ghazi@gmail.com", "123456")
+   .signInWithEmailAndPassword(data.email, data.password)
    .then(() => {
+      AsyncStorage.setItem('setUser','true')
+      var uid =firebase.auth().currentUser.uid
+      firebase.database().ref(`users/${uid}/Status`).set({
+        Status:true
+      })
      navigation.navigate("Home1")
    })
    .catch(error => {
@@ -149,7 +154,7 @@ const SigninScreen = ({ navigation }) => {
           <View style={styles.button}>
             <TouchableOpacity onPress={()=>onPressButton()} style={styles.signIn}>
             <LinearGradient
-            colors={[theme.colors.blue,"#01168a"]}
+            colors={[theme.colors.blue,theme.colors.blue]}
             style={styles.signIn}
             
             >
