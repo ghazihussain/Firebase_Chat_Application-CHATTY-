@@ -1,58 +1,119 @@
 import React from 'react';
-import {View, Dimensions, Text, Image, AsyncStorage} from 'react-native';
+import {View,Text, Button,StyleSheet,Dimensions,Image,TouchableOpacity} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import * as Animatable from 'react-native-animatable';
+
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Ionicons'
 import theme from '../utils/theme';
+Icon.loadFont();
+MaterialIcons.loadFont();
 
-class splash extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
-  performTimeConsumingTask = async () => {
-    return new Promise(resolve =>
-      setTimeout(() => {
-        // this.props.navigation.navigate('Auth');
-        resolve("result");
-      }, 500),
-    );
-  };
-  async componentDidMount() {
-    setTimeout(() => {
-        console.log('splash 1called');
-        this.props.navigation.navigate('LoginScreen')
-      }, 500),
-    console.log('splash called');
-  }
-
-  render() {
-    console.log('splash called');
+const SplashScreen = ({ navigation }) => {
     return (
       <View style={styles.container}>
-        {/* <Text style={styles.text}>Circles</Text> */}
-         <Image style={styles.imageStyle} source={theme.images.mainLogo} resizeMode="contain" /> 
+
+          <View style={styles.header} >
+
+              <Animatable.Image source={require('../assets/mainLogo.png')}
+              animation="bounceIn"
+              duraton="3000"
+              style={styles.logo}
+              resizeMode="stretch"
+
+              />
+
+          </View>
+          <Animatable.View 
+          animation="fadeInUpBig"
+
+          
+          style={styles.footer}>
+              <Text style={styles.title}>Stay connected with everyone!</Text>
+              <Text style={styles.text}>Sign in with account</Text> 
+              <View style={styles.button}>
+              <TouchableOpacity
+              onPress={()=>navigation.navigate('LoginScreen')}
+              >
+                  <LinearGradient
+                  colors={['#FFF','#FFF']}
+                  style={styles.signIn}
+                  >
+                      <Text style={styles.textSign}> Get Started</Text>
+                      <MaterialIcons 
+                      name="navigate-next"
+                      color="#FFF"
+                      size={20}
+                    
+                    
+                      
+                      />
+
+                  </LinearGradient>
+
+              </TouchableOpacity>
+              </View>
+
+          </Animatable.View>
+
+        
       </View>
     );
   }
-}
-const styles = {
-  imageStyle: {
-    height: '50%',
-    width: '85%',
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    fontSize: 25,
-    color: theme.colors.purple,
-  },
-};
+  
 
-export default splash;
-// const mapStateToProps = ({ auth }) => {
-//         return { auth };
-//       };
-//       export default connect(mapStateToProps, {
-//         getUserData
-//       })(splash);
+  export default SplashScreen;
+
+  const {height} = Dimensions.get("screen");
+  const height_logo = height * 0.28;
+  
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1, 
+      backgroundColor: "#FFF"
+    },
+    header: {
+        flex: 2,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    footer: {
+        flex: 1,
+        backgroundColor: theme.colors.blue,
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        paddingVertical: 50,
+        paddingHorizontal: 30
+    },
+    logo: {
+        width: height_logo,
+        height: height_logo
+    },
+    title: {
+        color: '#05375a',
+        fontSize: 30,
+        fontWeight: 'bold'
+    },
+    text: {
+        color: '#FFF',
+        marginTop:5
+    },
+    button: {
+        alignItems: 'flex-end',
+        marginTop: 30,
+       
+    },
+    signIn: {
+        width: 150,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 50,
+        flexDirection: 'row'
+    },
+    textSign: {
+        color: theme.colors.blue,
+        fontWeight: 'bold'
+    }
+  });
