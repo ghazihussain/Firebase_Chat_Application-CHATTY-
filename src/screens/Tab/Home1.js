@@ -1,10 +1,11 @@
 
 import React, { Component } from 'react';
-import {Text,View,TouchableOpacity,StatusBar, Alert,StyleSheet,Image} from 'react-native';
+import {Text,View,TouchableOpacity,StatusBar, Alert,StyleSheet,Image,ScrollView} from 'react-native';
 import {Button,Item,Icon,Input} from 'native-base'
 import theme from '../../utils/theme';
 import firebase from 'react-native-firebase'
 import { FlatList } from 'react-native-gesture-handler';
+import {Gravatar, GravatarApi} from 'react-native-gravatar';
 
 console.disableYellowBox = true;
 var data_array=[];
@@ -94,10 +95,14 @@ return(
               onChangeText={(value) => this.updateSearch(value)}
             ></Input>
           </Item>
-      <FlatList
+          <ScrollView
+          
+          >
+                <FlatList
          style={{margin:10,alignContent:"center"}}
          data={this.state.data}
          extraData={this.state}
+         marginBottom={'50%'}
          renderItem={({item,index})=>
       {
       return(
@@ -105,7 +110,21 @@ return(
         <TouchableOpacity  onPress={() => this.onUserPress(item)}>
           <View style={styles.box}>
             {/* <Image style={styles.icon} source={{uri: 'https://png.icons8.com/ok/color/20/ffffff'}}/> */}
+            {/* <Image style={styles.image} source={{uri: item.image_url}} /> */}
+            { 
+              item.image_url===null || item.image_url==="" || item.image_url===undefined?
+              <Gravatar
+              options={{
+                email: 'example@gmail.com',
+                parameters: {size: '200', d: 'mm'},
+                secure: true,
+              }}
+              style={styles.image}
+            />:
             <Image style={styles.image} source={{uri: item.image_url}} />
+   
+
+        }
             <View style={styles.boxContent}>
               <Text style={styles.title}>{`${item.name} ${item.lastName}`}</Text>
               <Text style={styles.description}>{item.gender}</Text>
@@ -120,8 +139,11 @@ return(
    }}
    keyExtractor={(item,index)=>{index.toString()}}
    />
+     </ScrollView>
+   </View>
+
 </View>
-</View>
+
 );
 }
 } ;

@@ -12,7 +12,9 @@ import { Icon,Item, Row } from 'native-base';
 import theme from '../../utils/theme';
 import firebase from 'react-native-firebase'
 import { TapGestureHandler } from 'react-native-gesture-handler';
-
+import ImagePicker from 'react-native-image-picker';
+import {Gravatar, GravatarApi} from 'react-native-gravatar';
+import {Spinner} from '../../utils/Spinner';
 
 
 
@@ -24,14 +26,89 @@ var dataArray=[]
 
 // asada
 var url=null
+var sourcePath=null;
+var user_id=null
+var visible=false
+
 export default class Home5 extends Component {
 
     constructor(props){
         super(props);
         this.state={
-            url:null,name:"",lastname:"",age:null,birthdate:null,skill:"",gender:null,email:"",city:""
+            url:null,name:"",lastname:"",age:null,birthdate:null,skill:"",gender:null,email:"",city:"",image_url:"",visible:false
         }
         }
+        openPic () {
+          var options = {
+            title: 'UPLOAD PHOTO',
+            takePhotoButtonTitle: 'Take photo with your camera',
+            chooseFromLibraryButtonTitle: 'choose photo from library',
+            maxWidth: 500,
+            maxHeight: 500,
+            quality: 1
+          };
+          ImagePicker.showImagePicker(options, response => {
+            console.log('Response = ', response);
+            // setvisible(true);
+            visible=true
+            this.setState({visible:true})
+            console.log(this.state.visible)
+            if (response.didCancel) {
+              // setvisible(false);
+              visible=false
+              this.setState({visible:false})
+              console.log('User cancelled image picker');
+            } else if (response.error) {
+              this.setState({visible:false})
+              visible=false
+              console.log('ImagePicker Error: ', response.error);
+            } else {
+              const source = {uri: response.uri};
+      
+              sourcePath = {uri: response.uri};
+      
+              if (Platform.OS === 'ios') {
+                sourcePath = {uri: response.uri};
+              } else {
+                sourcePath = {uri: response.path};
+              }
+      
+             this.setState({image_url:source})
+             this.setState({visible:false})
+             visible=false
+              user_id=firebase.auth().currentUser.uid
+              var firebaseStorageRef = firebase.storage().ref('ProfileImages/');
+              const imageRef = firebaseStorageRef.child(
+                'user/' + user_id + '/' + '.jpg',
+              );
+              
+              var image_uri = imageRef
+                .putFile(sourcePath.uri, {contentType: 'image/jpg'})
+                .then(function() {
+                  return imageRef.getDownloadURL();
+                  //   console.log("Image Url is: ",image_url)
+                })
+                .then(url => {
+                  this.setState({visible:false})
+                 this.setState({image_uri:image_uri})
+                  console.log('urrl is:', url);
+                
+                  firebase.database().ref(`users/${user_id}`).update({
+                    image_url:url
+                  })
+      
+                  console.log('image data is', imageData);
+                  // firebase.database().ref("users/"+user_id).update({image_url:url})
+                  //   this.setState({ avatarSource: { uri: url } }, () => {
+                  // this.setState({ loading: false })
+                  // firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).update({
+                  //   photoURL: url
+                  // })
+                  //   })
+                });
+            }
+          });
+        };
 
     takedata(){
         var uid=firebase.auth().currentUser.uid
@@ -39,7 +116,7 @@ export default class Home5 extends Component {
         
         firebase.database().ref(`users/${uid}`).on("value",(snapshot)=>
         {
-           console.log(snapshot.val().birthdayDate)
+           console.log("s",snapshot.val().image_url)
            url=snapshot.val().image_url
            console.log(url)
             this.setState({
@@ -53,7 +130,7 @@ export default class Home5 extends Component {
                 city:snapshot.val().city,
 
             },
-            console.log(this.state.name)
+            console.log(this.state.image_url)
             )
        
         })
@@ -70,18 +147,38 @@ export default class Home5 extends Component {
         render() {
           
             return (
+              
               <View style={styles.container}>
+                <Spinner visible={visible} />
               <StatusBar backgroundColor={'#011935'} barStyle="dark-content" hidden={false} networkActivityIndicatorVisible={false}/>
               <View style={styles.header}>
               {/* <Image style={{height:200,width:"100%"}} source={require('../../assets/cover.png')}/> */}
               <StatusBar backgroundColor={'#011935'} barStyle="dark-content" hidden={false} networkActivityIndicatorVisible={false}/>
+              
               </View>
+              { 
+              url===null || url==="" || url===undefined?
+              <Gravatar
+              options={{
+                email: 'example@gmail.com',
+                parameters: {size: '200', d: 'mm'},
+                secure: true,
+              }}
+              style={styles.avatar}
+            />:
+      
               <Image
         style={styles.avatar}
         source={{
           uri: url,
         }}
       />
+
+        }
+      <TouchableOpacity onPress={()=>this.openPic()} style={{left:150,top:200,position:"absolute",backgroundColor:'lightgrey',padding:2,borderRadius:20}}>
+                        <Icon type={"MaterialIcons"} name="edit"
+                            style={{ color: 'grey', fontSize: 25,fontWeight:"bold"}} />
+                       </TouchableOpacity>
               <TouchableOpacity onPress={()=>this.props.navigation.navigate('Settings')} style={styles.buttonContainer}>
                <Icon name={"user-plus"} type={"FontAwesome5"} style={{color:theme.colors.blue,fontWeight:"bold",fontSize:19,marginRight:10,marginTop:2,transform: [{rotateY: '180deg'}]}}/>   
               <Text style={{fontWeight:"bold",color:theme.colors.blue}} >Edit Profile</Text>
@@ -131,6 +228,8 @@ export default class Home5 extends Component {
             </View>
           </View>            );
           }
+        
+          
         }
 
         const styles = StyleSheet.create({
